@@ -53,11 +53,10 @@ namespace OptimizeDelete.Frm
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			var data = DateTime.Now.ToString("yyyy/MM/dd 00:00:00");
-			var data2= DateTime.Now.ToString("yyyy/MM/dd 23:59:59");
-			dtpinicio.Value = Convert.ToDateTime(data);
+			 
+			dtpinicio.Value = DateTime.Now;
 
-			dtpfinal.Value = Convert.ToDateTime(data2);
+			dtpfinal.Value = DateTime.Now;
 
 			CarregarGridTabelas();
 
@@ -93,7 +92,7 @@ namespace OptimizeDelete.Frm
 			// Adicionamos as colunas ao DGV.
 			dataGridView1.Columns.AddRange(new DataGridViewColumn[] { txtc1, txtc2 });
 
-			 dataGridView1.DataSource = dtfilial;
+			dataGridView1.DataSource = dtfilial;
 
 			//return dt;
 		}
@@ -106,7 +105,11 @@ namespace OptimizeDelete.Frm
 
 			DataTable dataTable = acessoDados.ExecutarConsulta(CommandType.Text, query);
 
-
+			if(dataTable.Rows.Count == 0)
+            {
+				MessageBox.Show("Loja única não será possível executar a função Deletes" ,"Atenção",MessageBoxButtons.OK, MessageBoxIcon.Information);
+				Delete.Enabled = false;
+            }
 			return dataTable;
 		}
 
@@ -488,8 +491,8 @@ namespace OptimizeDelete.Frm
 			else
 			{
 				var tabelas = Tabelas.Instancia;
-				 var data = dtpinicio.Value.ToString("yyy/MM/dd 00:00:00");
-				tabelas.dtInicial = data;
+				DateTime data = dtpinicio.Value;
+				tabelas.dtInicial = data.ToString("yyyy/MM/dd 00:00:00"); 
 			}
 
 		}
@@ -504,8 +507,8 @@ namespace OptimizeDelete.Frm
 			else
 			{
 				var tabelas = Tabelas.Instancia;
-				var data = dtpfinal.Value.ToString("yyyy/MM/dd 23:59:59");
-				tabelas.dtFinal = data;
+				DateTime data = dtpfinal.Value;
+				tabelas.dtFinal = data.ToString("yyyy/MM/dd 23:59:59"); ;
 			}
 
 

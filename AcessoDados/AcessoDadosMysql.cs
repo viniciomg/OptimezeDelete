@@ -55,9 +55,10 @@ namespace OptimizeDelete.AcessoDados
 			tabelas.database = database;
 			bancoDados.Banco=database;
 						
-			conn.ConnectionString =@"server=" + local + ";database=" + database + ";userid=" + usuario + ";password=" + senha + ";";
-            	
-			if(conn.State != ConnectionState.Open)
+			conn.ConnectionString =@"server=" + local + ";database=" + database + ";userid=" + usuario + ";password=" + senha + "; convert zero datetime = True";
+
+
+			if (conn.State != ConnectionState.Open)
 				conn.Open();
 			return conn;
 		}
